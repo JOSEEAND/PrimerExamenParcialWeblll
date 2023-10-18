@@ -193,15 +193,15 @@ def getNivelOcupacionVuelo():
     resu = execute(
         """
         SELECT
-            f.flight_id AS "ID de vuelo",
-            s.fare_conditions AS "Tipo de clase",
-            COUNT(bp.seat_no) AS "Cantidad de sillas ocupadas",
+            f.flight_id AS "Vuelo id",
+            s.fare_conditions AS "Clase tipo",
+            COUNT(bp.seat_no) AS "Numero de sillas ocupadas",
             (
                 SELECT COUNT(*) 
                 FROM bookings.seats 
                 WHERE seats.aircraft_code = f.aircraft_code 
                 AND seats.fare_conditions = s.fare_conditions
-            ) - COUNT(bp.seat_no) AS "Cantidad de sillas disponibles",
+            ) - COUNT(bp.seat_no) AS "Numero de sillas disponibles",
             (
                 SELECT COUNT(*) 
                 FROM bookings.seats 
@@ -229,10 +229,10 @@ def getNivelOcupacionVuelo():
             flight_id, fare_conditions, sillas_ocupadas, sillas_disponibles, total_sillas
         ) in resu:
             salida["data"].append({
-                "ID de vuelo": flight_id,
-                "Tipo de clase": fare_conditions,
-                "Cantidad de sillas ocupadas": sillas_ocupadas,
-                "Cantidad de sillas disponibles": sillas_disponibles,
+                "Vuelo id": flight_id,
+                "Clase tipo": fare_conditions,
+                "Numero de sillas ocupadas": sillas_ocupadas,
+                "Numero de sillas disponibles": sillas_disponibles,
                 "Total de sillas": total_sillas,
             })
     else:
